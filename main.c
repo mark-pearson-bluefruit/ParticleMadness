@@ -29,6 +29,7 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
+            DrawCircle(55, 0, 50, MAROON);
             DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
