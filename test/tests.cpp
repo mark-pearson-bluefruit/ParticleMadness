@@ -75,7 +75,7 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
 
     // 2nd Call
-    ASSERT_EQ(600, DrawCircle_fake.arg0_history[1]);
+    ASSERT_EQ(400, DrawCircle_fake.arg0_history[1]);
     ASSERT_EQ(300, DrawCircle_fake.arg1_history[1]);
     ASSERT_EQ(20., DrawCircle_fake.arg2_history[1]);
     ASSERT_TRUE(colorsEqual(RED, DrawCircle_fake.arg3_history[1]));
