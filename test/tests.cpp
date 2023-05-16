@@ -1,6 +1,6 @@
-#include "include/test/fff.h"
-#include "gtest/googletest/include/gtest/gtest.h"
-#include "include/raylib.h"
+#include "include/fff.h"
+#include "gtest/gtest.h"
+#include "raylib.h"
 
 DEFINE_FFF_GLOBALS;
 
@@ -35,7 +35,7 @@ TEST(MyTestCase, TestOne) {
 
 TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
-    /*
+    
     particle particles[3];
     particles[0].position = Vector2(0., 0.);
     particles[1].position = Vector2(10., 15.);
@@ -48,12 +48,12 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     particles[0].colour = MAROON;
     particles[1].colour = RED;
     particles[2].colour = BLACK;
-    */
+    
     // When
-    DrawCircle(0, 0, 1., MAROON);
-    DrawCircle(10, 15, 3., RED);
-    DrawCircle(35, 35, 5., BLACK);
-    //displayParticle(particles);
+    //DrawCircle(0, 0, 1., MAROON);
+    //DrawCircle(10, 15, 3., RED);
+    //DrawCircle(35, 35, 5., BLACK);
+    displayParticle(particles);
 
     // Then
     ASSERT_EQ(3, DrawCircle_fake.call_count);
@@ -75,8 +75,6 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     ASSERT_EQ(35, DrawCircle_fake.arg1_history[2]);
     ASSERT_EQ(5., DrawCircle_fake.arg2_history[2]);
     ASSERT_TRUE(colorsEqual(BLACK, DrawCircle_fake.arg3_history[2]));
-
-    //displayParticle(particles);
 }
    
 int main(int argc, char** argv) {
