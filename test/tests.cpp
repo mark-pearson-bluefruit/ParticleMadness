@@ -39,7 +39,8 @@ TEST(MyTestCase, TestOne) {
 TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
     
-    particle particles[3];
+    const size_t number_of_particles = 3;
+    particle particles[number_of_particles];
     particles[0].position = {0., 0.};
     particles[1].position = {10., 15.};
     particles[2].position = {35., 35.};
@@ -53,7 +54,7 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     particles[2].color = BLACK;
     
     // When
-    displayParticle(nullptr);
+    displayParticle(particles, number_of_particles);
 
     // Then
     ASSERT_EQ(3, DrawCircle_fake.call_count);
@@ -81,12 +82,3 @@ int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
-/*
-    particles[0].position.x = 0.;
-    particles[0].position.y = 0.;
-    particles[1].position.x = 10.;
-    particles[1].position.y = 15.;
-    particles[2].position.x = 35.;
-    particles[2].position.y = 35.;
-*/
