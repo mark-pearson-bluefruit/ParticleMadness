@@ -114,7 +114,7 @@ TEST_F(Display, DisplayParticleDataWhenWindowNotAtOriginCorrectly) {
     // 1st Call
     ASSERT_EQ(400, DrawCircle_fake.arg0_history[0]);
     ASSERT_EQ(resolutionY - 300 - 1, DrawCircle_fake.arg1_history[0]);
-    ASSERT_EQ(360., DrawCircle_fake.arg2_history[0]);
+    ASSERT_EQ(100., DrawCircle_fake.arg2_history[0]);
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
 }
 
