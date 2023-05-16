@@ -1,6 +1,9 @@
 #include "include/fff.h"
 #include "gtest/gtest.h"
+
 #include "raylib.h"
+#include "render.h"
+#include "particle.h"
 
 DEFINE_FFF_GLOBALS;
 
@@ -37,23 +40,20 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
     
     particle particles[3];
-    particles[0].position = Vector2(0., 0.);
-    particles[1].position = Vector2(10., 15.);
-    particles[2].position = Vector2(35., 35.);
+    particles[0].position = {0., 0.};
+    particles[1].position = {10., 15.};
+    particles[2].position = {35., 35.};
 
     particles[0].radius = 1.;
     particles[1].radius = 3.;
     particles[2].radius = 5.;
 
-    particles[0].colour = MAROON;
-    particles[1].colour = RED;
-    particles[2].colour = BLACK;
+    particles[0].color = MAROON;
+    particles[1].color = RED;
+    particles[2].color = BLACK;
     
     // When
-    //DrawCircle(0, 0, 1., MAROON);
-    //DrawCircle(10, 15, 3., RED);
-    //DrawCircle(35, 35, 5., BLACK);
-    displayParticle(particles);
+    displayParticle(nullptr);
 
     // Then
     ASSERT_EQ(3, DrawCircle_fake.call_count);
@@ -81,3 +81,12 @@ int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+
+/*
+    particles[0].position.x = 0.;
+    particles[0].position.y = 0.;
+    particles[1].position.x = 10.;
+    particles[1].position.y = 15.;
+    particles[2].position.x = 35.;
+    particles[2].position.y = 35.;
+*/
