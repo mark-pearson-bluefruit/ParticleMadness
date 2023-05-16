@@ -70,23 +70,54 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
 
     // 1st Call
     ASSERT_EQ(0, DrawCircle_fake.arg0_history[0]);
-    ASSERT_EQ(0, DrawCircle_fake.arg1_history[0]);
+    ASSERT_EQ(resolutionY - 0 - 1, DrawCircle_fake.arg1_history[0]);
     ASSERT_EQ(360., DrawCircle_fake.arg2_history[0]);
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
 
     // 2nd Call
     ASSERT_EQ(400, DrawCircle_fake.arg0_history[1]);
-    ASSERT_EQ(300, DrawCircle_fake.arg1_history[1]);
+    ASSERT_EQ(resolutionY - 300 - 1, DrawCircle_fake.arg1_history[1]);
     ASSERT_EQ(20., DrawCircle_fake.arg2_history[1]);
     ASSERT_TRUE(colorsEqual(RED, DrawCircle_fake.arg3_history[1]));
 
     // 3rd Call
     ASSERT_EQ(700, DrawCircle_fake.arg0_history[2]);
-    ASSERT_EQ(560, DrawCircle_fake.arg1_history[2]);
+    ASSERT_EQ(resolutionY - 560 - 1, DrawCircle_fake.arg1_history[2]);
     ASSERT_EQ(40., DrawCircle_fake.arg2_history[2]);
     ASSERT_TRUE(colorsEqual(BLACK, DrawCircle_fake.arg3_history[2]));
 }
-   
+
+TEST_F(Display, DisplayParticleDataWhenWindowNotAtOriginCorrectly) {
+    // Given 
+    
+    const size_t number_of_particles = 1;
+    const float windowX = 5.;
+    const float windowY = 6.; // Top left position of viewing window
+    const float windowWidth = 4.;
+    const float windowHeight = 2.;
+    const int resolutionX = 800;
+    const int resolutionY = 400;
+    Rectangle window = {windowX, windowY, windowWidth, windowHeight};
+    Vector2 resolution = {resolutionX, resolutionY};
+
+    particle particles[number_of_particles];
+    particles[0].position = {7., 5.5};
+    particles[0].radius = 0.5;
+    particles[0].color = MAROON;
+    
+    // When
+    displayParticle(particles, number_of_particles, window, resolution);
+
+    // Then
+    ASSERT_EQ(1, DrawCircle_fake.call_count);
+
+    // 1st Call
+    ASSERT_EQ(400, DrawCircle_fake.arg0_history[0]);
+    ASSERT_EQ(resolutionY - 300 - 1, DrawCircle_fake.arg1_history[0]);
+    ASSERT_EQ(360., DrawCircle_fake.arg2_history[0]);
+    ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
