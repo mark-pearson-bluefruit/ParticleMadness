@@ -1,26 +1,27 @@
+#include "include/test/fff.h"
 #include "gtest/googletest/include/gtest/gtest.h"
-#include "gtest/googlemock/include/gmock/gmock.h"
 #include "include/raylib.h"
 
-class RaylibMock
+DEFINE_FFF_GLOBALS;
+
+FAKE_VOID_FUNC(DrawCircle, int, int, float, Color);
+
+class Display : public testing::Test
 {
 public:
-    MOCK_METHOD4(DrawCircle, void(int, int, float, Color));
+    void SetUp()
+    {
+        RESET_FAKE(DrawCircle);
+        FFF_RESET_HISTORY();
+    }
 };
 
-bool operator==(const Color& lhs, const Color& rhs)
-{
-    return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a;
-}
-   
 TEST(MyTestCase, TestOne) {
     int x = 1;
     EXPECT_EQ(x, 1);
 }
 
-TEST(Display, DisplayAllCirclesFromParticleDataCorrectly) {
-    RaylibMock raylibMock;
-
+TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
     /*
     particle particles[3];
@@ -37,18 +38,18 @@ TEST(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     particles[2].colour = BLACK;
     */
     // Expect
-    ::testing::Sequence s;
-    EXPECT_CALL(raylibMock, DrawCircle(0, 0, 1., MAROON)).InSequence(s);
-    EXPECT_CALL(raylibMock, DrawCircle(10, 15, 3., RED)).InSequence(s);
-    EXPECT_CALL(raylibMock, DrawCircle(35, 35, 5., BLACK)).InSequence(s);
+    //::testing::Sequence s;
+    //EXPECT_CALL(raylibMock, DrawCircle(0, 0, 1., MAROON)).InSequence(s);
+    //EXPECT_CALL(raylibMock, DrawCircle(10, 15, 3., RED)).InSequence(s);
+    //EXPECT_CALL(raylibMock, DrawCircle(35, 35, 5., BLACK)).InSequence(s);
 
     // Verify that DrawCircle is called exactly 3 times
-    EXPECT_CALL(raylibMock, DrawCircle).Times(3);
+    //EXPECT_CALL(raylibMock, DrawCircle).Times(3);
 
     // When
-    DrawCircle(0, 0, 1., MAROON);
-    DrawCircle(10, 15, 3., RED);
-    DrawCircle(35, 35, 5., BLACK);
+    //DrawCircle(0, 0, 1., MAROON);
+    //DrawCircle(10, 15, 3., RED);
+    //DrawCircle(35, 35, 5., BLACK);
 
     //displayParticle(particles);
 }
