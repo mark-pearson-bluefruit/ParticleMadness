@@ -6,6 +6,18 @@ DEFINE_FFF_GLOBALS;
 
 FAKE_VOID_FUNC(DrawCircle, int, int, float, Color);
 
+bool colorsEqual(Color colorOne, Color colorTwo) {
+    if (colorOne.r != colorTwo.r)
+        return false;
+    if (colorOne.g != colorTwo.g)
+        return false;
+    if (colorOne.b != colorTwo.b)
+        return false;
+    if (colorOne.a != colorTwo.a)
+        return false;
+    return true;
+}
+
 class Display : public testing::Test
 {
 public:
@@ -37,19 +49,32 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     particles[1].colour = RED;
     particles[2].colour = BLACK;
     */
-    // Expect
-    //::testing::Sequence s;
-    //EXPECT_CALL(raylibMock, DrawCircle(0, 0, 1., MAROON)).InSequence(s);
-    //EXPECT_CALL(raylibMock, DrawCircle(10, 15, 3., RED)).InSequence(s);
-    //EXPECT_CALL(raylibMock, DrawCircle(35, 35, 5., BLACK)).InSequence(s);
-
-    // Verify that DrawCircle is called exactly 3 times
-    //EXPECT_CALL(raylibMock, DrawCircle).Times(3);
-
     // When
-    //DrawCircle(0, 0, 1., MAROON);
-    //DrawCircle(10, 15, 3., RED);
-    //DrawCircle(35, 35, 5., BLACK);
+    DrawCircle(0, 0, 1., MAROON);
+    DrawCircle(10, 15, 3., RED);
+    DrawCircle(35, 35, 5., BLACK);
+    //displayParticle(particles);
+
+    // Then
+    ASSERT_EQ(3, DrawCircle_fake.call_count);
+
+    // 1st Call
+    ASSERT_EQ(0, DrawCircle_fake.arg0_history[0]);
+    ASSERT_EQ(0, DrawCircle_fake.arg1_history[0]);
+    ASSERT_EQ(1., DrawCircle_fake.arg2_history[0]);
+    ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
+
+    // 2nd Call
+    ASSERT_EQ(10, DrawCircle_fake.arg0_history[1]);
+    ASSERT_EQ(15, DrawCircle_fake.arg1_history[1]);
+    ASSERT_EQ(3., DrawCircle_fake.arg2_history[1]);
+    ASSERT_TRUE(colorsEqual(RED, DrawCircle_fake.arg3_history[1]));
+
+    // 3rd Call
+    ASSERT_EQ(35, DrawCircle_fake.arg0_history[2]);
+    ASSERT_EQ(35, DrawCircle_fake.arg1_history[2]);
+    ASSERT_EQ(5., DrawCircle_fake.arg2_history[2]);
+    ASSERT_TRUE(colorsEqual(BLACK, DrawCircle_fake.arg3_history[2]));
 
     //displayParticle(particles);
 }
