@@ -40,21 +40,30 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
     
     const size_t number_of_particles = 3;
+    const float windowX = 0.;
+    const float windowY = 1.5; // Top left position of viewing window
+    const float windowWidth = 2.;
+    const float windowHeight = 1.5;
+    const int resolutionX = 800;
+    const int resolutionY = 600;
+    Rectangle window = {windowX, windowY, windowWidth, windowHeight};
+    Vector2 resolution = {resolutionX, resolutionY};
+
     particle particles[number_of_particles];
     particles[0].position = {0., 0.};
-    particles[1].position = {10., 15.};
-    particles[2].position = {35., 35.};
+    particles[1].position = {1., 0.75};
+    particles[2].position = {1.75, 1.4};
 
-    particles[0].radius = 1.;
-    particles[1].radius = 3.;
-    particles[2].radius = 5.;
+    particles[0].radius = 0.9;
+    particles[1].radius = 0.05;
+    particles[2].radius = 0.1;
 
     particles[0].color = MAROON;
     particles[1].color = RED;
     particles[2].color = BLACK;
     
     // When
-    displayParticle(particles, number_of_particles);
+    displayParticle(particles, number_of_particles, window, resolution);
 
     // Then
     ASSERT_EQ(3, DrawCircle_fake.call_count);
@@ -62,19 +71,19 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // 1st Call
     ASSERT_EQ(0, DrawCircle_fake.arg0_history[0]);
     ASSERT_EQ(0, DrawCircle_fake.arg1_history[0]);
-    ASSERT_EQ(1., DrawCircle_fake.arg2_history[0]);
+    ASSERT_EQ(360., DrawCircle_fake.arg2_history[0]);
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
 
     // 2nd Call
-    ASSERT_EQ(10, DrawCircle_fake.arg0_history[1]);
-    ASSERT_EQ(15, DrawCircle_fake.arg1_history[1]);
-    ASSERT_EQ(3., DrawCircle_fake.arg2_history[1]);
+    ASSERT_EQ(600, DrawCircle_fake.arg0_history[1]);
+    ASSERT_EQ(300, DrawCircle_fake.arg1_history[1]);
+    ASSERT_EQ(20., DrawCircle_fake.arg2_history[1]);
     ASSERT_TRUE(colorsEqual(RED, DrawCircle_fake.arg3_history[1]));
 
     // 3rd Call
-    ASSERT_EQ(35, DrawCircle_fake.arg0_history[2]);
-    ASSERT_EQ(35, DrawCircle_fake.arg1_history[2]);
-    ASSERT_EQ(5., DrawCircle_fake.arg2_history[2]);
+    ASSERT_EQ(700, DrawCircle_fake.arg0_history[2]);
+    ASSERT_EQ(560, DrawCircle_fake.arg1_history[2]);
+    ASSERT_EQ(40., DrawCircle_fake.arg2_history[2]);
     ASSERT_TRUE(colorsEqual(BLACK, DrawCircle_fake.arg3_history[2]));
 }
    
