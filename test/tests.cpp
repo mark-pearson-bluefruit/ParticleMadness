@@ -88,8 +88,7 @@ TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
 }
 
 TEST_F(Display, DisplayParticleDataWhenWindowNotAtOriginCorrectly) {
-    // Given 
-    
+    // Given     
     const size_t number_of_particles = 1;
     const float windowX = 5.;
     const float windowY = 6.; // Top left position of viewing window
@@ -116,6 +115,28 @@ TEST_F(Display, DisplayParticleDataWhenWindowNotAtOriginCorrectly) {
     ASSERT_EQ(resolutionY - 300 - 1, DrawCircle_fake.arg1_history[0]);
     ASSERT_EQ(100., DrawCircle_fake.arg2_history[0]);
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
+}
+
+TEST_F(Calculation, TheNextTimeStepIsCalculatedCorrectly) {
+    // Given
+    const size_t number_of_particles = 2;
+    const float deltaTime = 0.1;
+
+    particle particles[number_of_particles];
+    particles[0].position = {7., 5.5};
+    particles[1].position = {3., 6.5};
+
+    particles[0].velocity = {1., 2.1};
+    particles[1].velocity = {-1., -3.};
+
+    // When
+    nextStep(particles, deltaTime);
+
+    // Then
+    ASSERT_EQ(particles[0].position.x, 7.1);
+    ASSERT_EQ(particles[0].position.y, 5.71);
+    ASSERT_EQ(particles[1].position.x, 2.9);
+    ASSERT_EQ(particles[1].position.y, 6.2);
 }
 
 int main(int argc, char** argv) {

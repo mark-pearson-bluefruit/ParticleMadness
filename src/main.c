@@ -8,13 +8,13 @@ int main(void)
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenHeight = 400;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    int loopNum = 0;
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -29,7 +29,8 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
-            DrawCircle(55, 0, 50, MAROON);
+            DrawCircle(loopNum%screenWidth, 0, 50, MAROON);
+            loopNum++;
             DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
