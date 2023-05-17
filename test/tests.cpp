@@ -141,6 +141,9 @@ TEST_F(Calculation, TheNextTimeStepIsCalculatedCorrectly) {
     particles[0].position = {7., 5.5};
     particles[1].position = {3., 6.5};
 
+    particles[0].radius = 1.;
+    particles[1].radius = 1.;
+
     particles[0].velocity = {1., 2.1};
     particles[1].velocity = {-1., -3.};
 
@@ -186,16 +189,16 @@ TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
     // Then
 
     // Position Check
-    /*
-    ASSERT_EQ(7.1f, particles[0].position.x);
-    ASSERT_EQ(5.71f, particles[0].position.y);
-    ASSERT_EQ(2.9f, particles[1].position.x);
-    ASSERT_EQ(6.2f, particles[1].position.y);    
-    ASSERT_EQ(7.1f, particles[2].position.x);
-    ASSERT_EQ(5.71f, particles[2].position.y);
-    ASSERT_EQ(2.9f, particles[3].position.x);
-    ASSERT_EQ(6.2f, particles[4].position.y);
-    */
+    
+    ASSERT_EQ(2.1f, particles[0].position.x);
+    ASSERT_EQ(14.99f, particles[0].position.y);
+    ASSERT_EQ(39.8f, particles[1].position.x);
+    ASSERT_EQ(15.01f, particles[1].position.y);    
+    ASSERT_EQ(20.01f, particles[2].position.x);
+    ASSERT_EQ(18.9f, particles[2].position.y);
+    ASSERT_EQ(19.99f, particles[3].position.x);
+    ASSERT_EQ(11.2f, particles[3].position.y);
+    
 
     // Velocity Check
     ASSERT_EQ(1.f, particles[0].velocity.x);
