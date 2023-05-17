@@ -4,6 +4,6 @@
 #include "particle.h"
 #include <stdint.h>
 
-void nextStep(particle* particles, size_t number_of_particles, float deltaTime);
+void nextStep(particle* particles, size_t number_of_particles, float deltaTime, Rectangle box);
 
 #endif // NEXTSTEP_H
