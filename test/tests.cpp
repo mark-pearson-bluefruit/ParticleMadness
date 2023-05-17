@@ -149,6 +149,60 @@ TEST_F(Calculation, TheNextTimeStepIsCalculatedCorrectly) {
     ASSERT_EQ(6.2f, particles[1].position.y);
 }
 
+TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
+    // Given
+    const size_t number_of_particles = 4;
+    const float deltaTime = 0.1;
+    Rectangle box;
+    box.height =  10.;
+    box.width = 40.;
+    box.x = 1.;
+    box.y = 20.;
+
+    particle particles[number_of_particles];
+    particles[0].position = {2., 15.};
+    particles[1].position = {40., 15.};
+    particles[2].position = {20., 19.};
+    particles[3].position = {20., 11.};
+
+    particles[0].radius = 1.1;
+    particles[1].radius = 1.4;
+    particles[2].radius = 1.2;
+    particles[4].radius = 1.3;
+
+    particles[0].velocity = {-1., 0.};
+    particles[1].velocity = {2., 0.};
+    particles[2].velocity = {0., 1.};
+    particles[3].velocity = {0., -2.};
+
+    // When
+    nextStep(particles, number_of_particles, deltaTime, box);
+
+    // Then
+
+    // Position Check
+    /*
+    ASSERT_EQ(7.1f, particles[0].position.x);
+    ASSERT_EQ(5.71f, particles[0].position.y);
+    ASSERT_EQ(2.9f, particles[1].position.x);
+    ASSERT_EQ(6.2f, particles[1].position.y);    
+    ASSERT_EQ(7.1f, particles[2].position.x);
+    ASSERT_EQ(5.71f, particles[2].position.y);
+    ASSERT_EQ(2.9f, particles[3].position.x);
+    ASSERT_EQ(6.2f, particles[4].position.y);
+    */
+
+    // Velocity Check
+    ASSERT_EQ(1.f, particles[0].velocity.x);
+    ASSERT_EQ(0.f, particles[0].velocity.y);
+    ASSERT_EQ(-2.f, particles[1].velocity.x);
+    ASSERT_EQ(0.f, particles[1].velocity.y);
+    ASSERT_EQ(0.f, particles[2].velocity.x);
+    ASSERT_EQ(-1.f, particles[2].velocity.y);
+    ASSERT_EQ(0.f, particles[3].velocity.x);
+    ASSERT_EQ(2.f, particles[3].velocity.y);   
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
