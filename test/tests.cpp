@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "render.h"
 #include "particle.h"
+#include "nextstep.h"
 
 DEFINE_FFF_GLOBALS;
 
@@ -117,6 +118,15 @@ TEST_F(Display, DisplayParticleDataWhenWindowNotAtOriginCorrectly) {
     ASSERT_TRUE(colorsEqual(MAROON, DrawCircle_fake.arg3_history[0]));
 }
 
+class Calculation : public testing::Test
+{
+public:
+    void SetUp()
+    {
+
+    }
+};
+
 TEST_F(Calculation, TheNextTimeStepIsCalculatedCorrectly) {
     // Given
     const size_t number_of_particles = 2;
@@ -130,13 +140,13 @@ TEST_F(Calculation, TheNextTimeStepIsCalculatedCorrectly) {
     particles[1].velocity = {-1., -3.};
 
     // When
-    nextStep(particles, deltaTime);
+    nextStep(particles, number_of_particles, deltaTime);
 
     // Then
-    ASSERT_EQ(particles[0].position.x, 7.1);
-    ASSERT_EQ(particles[0].position.y, 5.71);
-    ASSERT_EQ(particles[1].position.x, 2.9);
-    ASSERT_EQ(particles[1].position.y, 6.2);
+    ASSERT_EQ(7.1f, particles[0].position.x);
+    ASSERT_EQ(5.71f, particles[0].position.y);
+    ASSERT_EQ(2.9f, particles[1].position.x);
+    ASSERT_EQ(6.2f, particles[1].position.y);
 }
 
 int main(int argc, char** argv) {
