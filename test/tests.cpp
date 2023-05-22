@@ -221,9 +221,11 @@ TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
 
     // When
     float velocityAfter1 = velocityAfterOneDimCollision(mass1, mass2, velocityBefore1, velocityBefore2);
+    float velocityAfter2 = velocityAfterOneDimCollision(mass2, mass1, velocityBefore2, velocityBefore1);
 
     // Then
     ASSERT_EQ(2.1f, velocityAfter1);
+    ASSERT_EQ(5.5f, velocityAfter2);
 }
 
 int main(int argc, char** argv) {
