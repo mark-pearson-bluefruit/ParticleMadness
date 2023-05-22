@@ -1,6 +1,8 @@
 #include "include/fff.h"
 #include "gtest/gtest.h"
 
+#include <cmath>
+
 #include "raylib.h"
 #include "render.h"
 #include "particle.h"
@@ -257,8 +259,25 @@ TEST(CollisionCalculation, CalculateTwoDimCollisionsCorrectly) {
     // Then
     ASSERT_EQ(-2.5f, velocityAfter1.x);
     ASSERT_EQ(0.f, velocityAfter1.y);
-    ASSERT_EQ(7.16666666667f, velocityAfter2.x);
+    ASSERT_EQ(3.5f, velocityAfter2.x);
     ASSERT_EQ(0.f, velocityAfter2.y);
+
+        // Given
+    mass1 = 4.0;
+    mass2 = 8.0;
+    velocityBefore1 = {5.5, 1.0};
+    velocityBefore2 = {-0.5, -1.0};
+    unitNormal = {1./sqrt(2), -1./sqrt(2)};
+
+    // When
+    velocityAfter1 = velocityAfterTwoDimCollision(mass1, mass2, velocityBefore1, velocityBefore2, unitNormal);
+    velocityAfter2 = velocityAfterTwoDimCollision(mass2, mass1, velocityBefore2, velocityBefore1, unitNormal);
+
+    // Then
+    ASSERT_EQ(29.0f/12.0f, velocityAfter1.x);
+    ASSERT_EQ(49.0f/12.0f, velocityAfter1.y);
+    ASSERT_EQ(5.0f/6.0f, velocityAfter2.x);
+    ASSERT_EQ(-7.0f/3.0f, velocityAfter2.y);
 }
 
 int main(int argc, char** argv) {
