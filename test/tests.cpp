@@ -226,6 +226,20 @@ TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
     // Then
     ASSERT_EQ(2.1f, velocityAfter1);
     ASSERT_EQ(5.5f, velocityAfter2);
+
+    // Given
+    mass1 = 5.5;
+    mass2 = 0.5;
+    velocityBefore1 = 1.0;
+    velocityBefore2 = 100.0;
+
+    // When
+    velocityAfter1 = velocityAfterOneDimCollision(mass1, mass2, velocityBefore1, velocityBefore2);
+    velocityAfter2 = velocityAfterOneDimCollision(mass2, mass1, velocityBefore2, velocityBefore1);
+
+    // Then
+    ASSERT_EQ(17.5f, velocityAfter1);
+    ASSERT_EQ(-81.5f, velocityAfter2);
 }
 
 int main(int argc, char** argv) {
