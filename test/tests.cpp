@@ -242,6 +242,25 @@ TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
     ASSERT_EQ(-81.5f, velocityAfter2);
 }
 
+TEST(CollisionCalculation, CalculateTwoDimCollisionsCorrectly) {
+    // Given
+    float mass1 = 4.0;
+    float mass2 = 8.0;
+    Vector2 velocityBefore1 = {5.5, 0.0};
+    Vector2 velocityBefore2 = {-0.5, 0.0};
+    Vector2 unitNormal = {1., 0.};
+
+    // When
+    Vector2 velocityAfter1 = velocityAfterTwoDimCollision(mass1, mass2, velocityBefore1, velocityBefore2, unitNormal);
+    Vector2 velocityAfter2 = velocityAfterTwoDimCollision(mass2, mass1, velocityBefore2, velocityBefore1, unitNormal);
+
+    // Then
+    ASSERT_EQ(-2.5f, velocityAfter1.x);
+    ASSERT_EQ(0.f, velocityAfter1.y);
+    ASSERT_EQ(7.16666666667f, velocityAfter2.x);
+    ASSERT_EQ(0.f, velocityAfter2.y);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
