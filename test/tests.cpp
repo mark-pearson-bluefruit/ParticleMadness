@@ -211,6 +211,20 @@ TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
     ASSERT_EQ(2.f, particles[3].velocity.y);   
 }
 
+TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
+    // Given
+    float mass1 = 1.0;
+    float mass2 = 1.0;
+    float velocityBefore1 = 5.5;
+    float velocityBefore2 = 2.1;
+
+    // When
+    float velocityAfter1 = velocityAfterOneDimCollision(mass1, mass2, velocityBefore1, velocityBefore2);
+
+    // Then
+    ASSERT_EQ(2.1, velocityAfter1);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
