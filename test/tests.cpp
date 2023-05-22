@@ -262,7 +262,7 @@ TEST(CollisionCalculation, CalculateTwoDimCollisionsCorrectly) {
     ASSERT_EQ(3.5f, velocityAfter2.x);
     ASSERT_EQ(0.f, velocityAfter2.y);
 
-        // Given
+    // Given
     mass1 = 4.0;
     mass2 = 8.0;
     velocityBefore1 = {5.5, 1.0};
