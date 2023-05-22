@@ -5,6 +5,7 @@
 #include "render.h"
 #include "particle.h"
 #include "nextstep.h"
+#include "collisioncalculation.h"
 
 DEFINE_FFF_GLOBALS;
 
@@ -222,7 +223,7 @@ TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
     float velocityAfter1 = velocityAfterOneDimCollision(mass1, mass2, velocityBefore1, velocityBefore2);
 
     // Then
-    ASSERT_EQ(2.1, velocityAfter1);
+    ASSERT_EQ(2.1f, velocityAfter1);
 }
 
 int main(int argc, char** argv) {
