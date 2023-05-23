@@ -2,6 +2,7 @@
 #define PARTICLE_H
 
 #include "raylib.h"
+#include <stdbool.h>
 
 typedef struct particle
 {
@@ -10,5 +11,7 @@ typedef struct particle
     float radius;
     Color color;
 } particle;
+
+bool doParticlesOverlap(particle particle1, particle particle2);
 
 #endif // PARTICLE_H
