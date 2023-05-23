@@ -9,6 +9,7 @@ typedef struct particle
     Vector2 position;
     Vector2 velocity;
     float radius;
+    float mass;
     Color color;
 } particle;
 
