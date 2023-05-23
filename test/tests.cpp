@@ -35,11 +35,6 @@ public:
     }
 };
 
-TEST(MyTestCase, TestOne) {
-    int x = 1;
-    EXPECT_EQ(x, 1);
-}
-
 TEST_F(Display, DisplayAllCirclesFromParticleDataCorrectly) {
     // Given 
     
@@ -214,6 +209,50 @@ TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
     ASSERT_EQ(2.f, particles[3].velocity.y);   
 }
 
+TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
+    // Given
+    const size_t number_of_particles = 2;
+    const float deltaTime = 0.1;
+    Rectangle box;
+    box.height =  10.;
+    box.width = 10.;
+    box.x = 10.;
+    box.y = 10.;
+
+    particle particles[number_of_particles];
+    particles[0].position = {4., 4.};
+    particles[1].position = {6., 6.};
+
+    particles[0].radius = 2.0;
+    particles[1].radius = 1.0;
+
+    particles[0].velocity = {5.5, 1.0};
+    particles[1].velocity = {-0.5, -1.0};
+
+    particles[0].mass = 4.0;
+    particles[1].mass = 8.0;
+
+    // When
+    nextStep(particles, number_of_particles, deltaTime, box);
+
+    // Then
+    Vector2 expectedVelocity[number_of_particles];
+    expectedVelocity[0] = {17.0/6.0, 22.0/6.0};
+    expectedVelocity[1] = {5.0/6.0, -7.0/3.0};
+
+    // Velocity Check
+    ASSERT_FLOAT_EQ(expectedVelocity[0].x, particles[0].velocity.x);
+    ASSERT_FLOAT_EQ(expectedVelocity[0].y, particles[0].velocity.y);
+    ASSERT_FLOAT_EQ(expectedVelocity[1].x, particles[1].velocity.x);
+    ASSERT_FLOAT_EQ(expectedVelocity[1].y, particles[1].velocity.y);
+
+    // Position Check   
+    ASSERT_FLOAT_EQ(4. + expectedVelocity[0].x*deltaTime, particles[0].position.x);
+    ASSERT_FLOAT_EQ(4. + expectedVelocity[0].y*deltaTime, particles[0].position.y);
+    ASSERT_FLOAT_EQ(6. + expectedVelocity[1].x*deltaTime, particles[1].position.x);
+    ASSERT_FLOAT_EQ(6. + expectedVelocity[1].y*deltaTime, particles[1].position.y);    
+}
+
 TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
     // Given
     float mass1 = 1.0;
@@ -291,7 +330,7 @@ TEST(CollisionCalculation, DetectACollisionBetweenTwoCircles) {
     particle particle3;
     particle3.position = {5, 6};
     particle3.radius = 1;
-    
+
     // Then
     ASSERT_TRUE(doParticlesOverlap(particle1, particle2));
     ASSERT_FALSE(doParticlesOverlap(particle2, particle3));
