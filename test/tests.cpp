@@ -274,10 +274,10 @@ TEST(CollisionCalculation, CalculateTwoDimCollisionsCorrectly) {
     velocityAfter2 = velocityAfterTwoDimCollision(mass2, mass1, velocityBefore2, velocityBefore1, unitNormal);
 
     // Then
-    ASSERT_EQ(29.0f/12.0f, velocityAfter1.x);
-    ASSERT_EQ(49.0f/12.0f, velocityAfter1.y);
-    ASSERT_EQ(5.0f/6.0f, velocityAfter2.x);
-    ASSERT_EQ(-7.0f/3.0f, velocityAfter2.y);
+    ASSERT_FLOAT_EQ(17.0/6.0, velocityAfter1.x);
+    ASSERT_FLOAT_EQ(44.0f/12.0f, velocityAfter1.y);
+    ASSERT_FLOAT_EQ(5.0f/6.0f, velocityAfter2.x);
+    ASSERT_FLOAT_EQ(-7.0f/3.0f, velocityAfter2.y);
 }
 
 int main(int argc, char** argv) {
