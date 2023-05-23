@@ -280,6 +280,23 @@ TEST(CollisionCalculation, CalculateTwoDimCollisionsCorrectly) {
     ASSERT_FLOAT_EQ(-7.0f/3.0f, velocityAfter2.y);
 }
 
+TEST(CollisionCalculation, DetectACollisionBetweenTwoCircles) {
+    // Given
+    particle particle1;
+    particle1.position = {1., 2.};
+    particle1.radius = 2;
+    particle particle2;
+    particle2.position = {0.5, 1.5};
+    particle2.radius = 1;
+    particle particle3;
+    particle3.position = {5, 6};
+    particle3.radius = 1;
+    
+    // Then
+    ASSERT_TRUE(doParticlesOverlap(particle1, particle2));
+    ASSERT_FALSE(doParticlesOverlap(particle2, particle3));
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
