@@ -216,12 +216,12 @@ TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
     Rectangle box;
     box.height =  10.;
     box.width = 10.;
-    box.x = 10.;
+    box.x = 0.;
     box.y = 10.;
 
     particle particles[number_of_particles];
-    particles[0].position = {4., 4.};
-    particles[1].position = {6., 6.};
+    particles[0].position = {4., 6.};
+    particles[1].position = {6., 4.};
 
     particles[0].radius = 2.0;
     particles[1].radius = 1.0;
@@ -248,9 +248,9 @@ TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
 
     // Position Check   
     ASSERT_FLOAT_EQ(4. + expectedVelocity[0].x*deltaTime, particles[0].position.x);
-    ASSERT_FLOAT_EQ(4. + expectedVelocity[0].y*deltaTime, particles[0].position.y);
+    ASSERT_FLOAT_EQ(6. + expectedVelocity[0].y*deltaTime, particles[0].position.y);
     ASSERT_FLOAT_EQ(6. + expectedVelocity[1].x*deltaTime, particles[1].position.x);
-    ASSERT_FLOAT_EQ(6. + expectedVelocity[1].y*deltaTime, particles[1].position.y);    
+    ASSERT_FLOAT_EQ(4. + expectedVelocity[1].y*deltaTime, particles[1].position.y);    
 }
 
 TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
