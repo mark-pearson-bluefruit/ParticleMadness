@@ -253,6 +253,80 @@ TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
     ASSERT_FLOAT_EQ(4. + expectedVelocity[1].y*deltaTime, particles[1].position.y);    
 }
 
+TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorrectly) {
+    // Given
+    const size_t number_of_particles = 4;
+    const float deltaTime = 0.1;
+    Rectangle box;
+    box.height =  10.;
+    box.width = 10.;
+    box.x = 0.;
+    box.y = 10.;
+
+    particle particles[number_of_particles];
+    particles[0].position.x = 0.9;
+    particles[0].position.y = 5.;
+    particles[0].velocity.x = -5.; 
+    particles[0].velocity.y = 4.0;
+    particles[0].radius = 1.;
+    particles[0].color = MAROON;
+    particles[0].mass = 1.;
+
+    particles[1].position.x = 19.;
+    particles[1].position.y = 5.;
+    particles[1].velocity.x = 5.; 
+    particles[1].velocity.y = 4.0;
+    particles[1].radius = 1.5;
+    particles[1].color = WHITE;
+    particles[1].mass = 1.;
+
+    particles[2].position.x = 10.;
+    particles[2].position.y = 1.;
+    particles[2].velocity.x = 5.; 
+    particles[2].velocity.y = -4.0;
+    particles[2].radius = 1.5;
+    particles[2].color = GREEN;
+    particles[2].mass = 1.;
+
+    particles[3].position.x = 10.;
+    particles[3].position.y = 9.;
+    particles[3].velocity.x = 5.; 
+    particles[3].velocity.y = 4.0;
+    particles[3].radius = 1.5;
+    particles[3].color = BLUE;
+    particles[3].mass = 1.;
+
+    // When
+    positionVelocityUpdateWithBoundingBox(&particles[0], box);
+    positionVelocityUpdateWithBoundingBox(&particles[0], box);
+    positionVelocityUpdateWithBoundingBox(&particles[0], box);
+    positionVelocityUpdateWithBoundingBox(&particles[0], box);
+
+    // Then
+    // Position Check
+    
+    ASSERT_FLOAT_EQ(1.1f, particles[0].position.x);
+    ASSERT_FLOAT_EQ(5.f, particles[0].position.y);
+    ASSERT_FLOAT_EQ(18.f, particles[1].position.x);
+    ASSERT_FLOAT_EQ(5.f, particles[1].position.y);    
+    ASSERT_FLOAT_EQ(10.f, particles[2].position.x);
+    ASSERT_FLOAT_EQ(2.0f, particles[2].position.y);
+    ASSERT_FLOAT_EQ(10.f, particles[3].position.x);
+    ASSERT_FLOAT_EQ(8.f, particles[3].position.y);
+    
+
+    // Velocity Check
+    ASSERT_FLOAT_EQ(5.f, particles[0].velocity.x);
+    ASSERT_FLOAT_EQ(4.f, particles[0].velocity.y);
+    ASSERT_FLOAT_EQ(-5.f, particles[1].velocity.x);
+    ASSERT_FLOAT_EQ(4.f, particles[1].velocity.y);
+    ASSERT_FLOAT_EQ(5.f, particles[2].velocity.x);
+    ASSERT_FLOAT_EQ(4.f, particles[2].velocity.y);
+    ASSERT_FLOAT_EQ(5.f, particles[3].velocity.x);
+    ASSERT_FLOAT_EQ(-4.f, particles[3].velocity.y);   
+
+}
+
 TEST(CollisionCalculation, CalculateOneDimCollisionsCorrectly) {
     // Given
     float mass1 = 1.0;
