@@ -259,7 +259,7 @@ TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorr
     const float deltaTime = 0.1;
     Rectangle box;
     box.height =  10.;
-    box.width = 10.;
+    box.width = 20.;
     box.x = 0.;
     box.y = 10.;
 
@@ -297,10 +297,10 @@ TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorr
     particles[3].mass = 1.;
 
     // When
-    positionVelocityUpdateWithBoundingBox(&particles[0], box);
-    positionVelocityUpdateWithBoundingBox(&particles[0], box);
-    positionVelocityUpdateWithBoundingBox(&particles[0], box);
-    positionVelocityUpdateWithBoundingBox(&particles[0], box);
+    positionVelocityCorrectionWithBoundingBox(&particles[0], box);
+    positionVelocityCorrectionWithBoundingBox(&particles[1], box);
+    positionVelocityCorrectionWithBoundingBox(&particles[2], box);
+    positionVelocityCorrectionWithBoundingBox(&particles[3], box);
 
     // Then
     // Position Check
