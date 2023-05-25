@@ -38,7 +38,7 @@ void example1(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
 
 // Examples
 void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
-    *numberOfParticles = 250;
+    *numberOfParticles = 2000;
     window->x = 0.;
     window->y = 50.;
     window->height = 50;
@@ -62,6 +62,78 @@ void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
     particles[0].velocity.x = 3.;
 }
 
+void example3(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
+    *numberOfParticles = 4;
+    window->x = 0.;
+    window->y = 10.;
+    window->height = 10;
+    window->width = 20;
+
+    resolution->x = screenWidth;
+    resolution->y = screenHeight;
+
+       particles[0].position.x = 0.9;
+    particles[0].position.y = 5.;
+    particles[0].velocity.x = -5.; 
+    particles[0].velocity.y = 4.0;
+    particles[0].radius = 1.;
+    particles[0].color = MAROON;
+    particles[0].mass = 1.;
+
+    particles[1].position.x = 19.;
+    particles[1].position.y = 5.;
+    particles[1].velocity.x = 5.; 
+    particles[1].velocity.y = 4.0;
+    particles[1].radius = 1.5;
+    particles[1].color = WHITE;
+    particles[1].mass = 1.;
+
+    particles[2].position.x = 10.;
+    particles[2].position.y = 1.;
+    particles[2].velocity.x = 5.; 
+    particles[2].velocity.y = 4.0;
+    particles[2].radius = 1.5;
+    particles[2].color = GREEN;
+    particles[2].mass = 1.;
+
+    particles[3].position.x = 10.;
+    particles[3].position.y = 9.;
+    particles[3].velocity.x = 5.; 
+    particles[3].velocity.y = -4.0;
+    particles[3].radius = 1.5;
+    particles[3].color = BLUE;
+    particles[3].mass = 1.;
+
+}
+
+void example4(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
+    *numberOfParticles = 2;
+    window->x = 0.;
+    window->y = 10.;
+    window->height = 10;
+    window->width = 20;
+
+    resolution->x = screenWidth;
+    resolution->y = screenHeight;
+
+    particles[0].position.x = 1.5;
+    particles[0].position.y = 5.;
+    particles[0].velocity.x = 0.; 
+    particles[0].velocity.y = -4.0;
+    particles[0].radius = 1.;
+    particles[0].color = MAROON;
+    particles[0].mass = 1.;
+
+    particles[1].position.x = 2.5;
+    particles[1].position.y = 5.;
+    particles[1].velocity.x = 0.; 
+    particles[1].velocity.y = 4.0;
+    particles[1].radius = 1.;
+    particles[1].color = WHITE;
+    particles[1].mass = 1.;
+
+
+}
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
