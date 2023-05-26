@@ -187,7 +187,7 @@ TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
     // Then
 
     // Position Check
-    
+
     ASSERT_FLOAT_EQ(2.3f, particles[0].position.x);
     ASSERT_FLOAT_EQ(14.99f, particles[0].position.y); //
     ASSERT_FLOAT_EQ(39.0f, particles[1].position.x);
@@ -255,7 +255,6 @@ TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
 TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorrectly) {
     // Given
     const size_t number_of_particles = 4;
-    const float deltaTime = 0.1;
     Rectangle box;
     box.height =  10.;
     box.width = 20.;
@@ -323,6 +322,81 @@ TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorr
     ASSERT_FLOAT_EQ(4.f, particles[2].velocity.y);
     ASSERT_FLOAT_EQ(5.f, particles[3].velocity.x);
     ASSERT_FLOAT_EQ(-4.f, particles[3].velocity.y);   
+
+}
+
+TEST(CollisionCalculation, CalculateContinuousCollisionBetweenTwoParticlesCorrectly) {
+    // Given
+    const size_t number_of_particles = 4;
+    Rectangle box;
+    box.height =  20.;
+    box.width = 25.;
+    box.x = 0.;
+    box.y = 20.;
+
+    particle particles[number_of_particles];
+
+    // Collision 1 
+    particles[0].position.x = 4.;
+    particles[0].position.y = 10.;
+    particles[0].velocity.x = 5.; 
+    particles[0].velocity.y = 0.0;
+    particles[0].radius = 1.;
+    particles[0].mass = 5.;
+
+    particles[1].position.x = 5.5;
+    particles[1].position.y = 10.;
+    particles[1].velocity.x = -10.; 
+    particles[1].velocity.y = 0.0;
+    particles[1].radius = 1.;
+    particles[1].mass = 5.;
+
+
+    // Collision 2
+    particles[2].position.x = 14.;
+    particles[2].position.y = 10.;
+    particles[2].velocity.x = 2.; 
+    particles[2].velocity.y = 2.;
+    particles[2].radius = 1.5;
+    particles[2].mass = 5.;
+
+
+    particles[3].position.x = 16.;
+    particles[3].position.y = 12.;
+    particles[3].velocity.x = -1.; 
+    particles[3].velocity.y = -1.;
+    particles[3].radius = 2.;
+    particles[3].mass = 5.;
+
+    // When
+    positionVelocityCorrectionWithTwoParticles(&particles[0], &particles[1]);
+    positionVelocityCorrectionWithTwoParticles(&particles[2], &particles[3]);
+
+    // Then
+
+    // Collision 1
+    ASSERT_FLOAT_EQ(3.5, particles[0].position.x);
+    ASSERT_FLOAT_EQ(10., particles[0].position.y);
+    ASSERT_FLOAT_EQ(6., particles[1].position.x);
+    ASSERT_FLOAT_EQ(10., particles[1].position.y);
+
+    ASSERT_FLOAT_EQ(-10., particles[0].velocity.x);
+    ASSERT_FLOAT_EQ(0., particles[0].velocity.y);
+    ASSERT_FLOAT_EQ(5., particles[1].velocity.x);
+    ASSERT_FLOAT_EQ(0., particles[1].velocity.y);
+
+    // Collision 2
+    ASSERT_FLOAT_EQ((64.-7.*sqrt(2))/4., particles[2].position.x);
+    ASSERT_FLOAT_EQ((48.-7.*sqrt(2))/4., particles[2].position.y);
+    ASSERT_FLOAT_EQ(16.475, particles[3].position.x);
+    ASSERT_FLOAT_EQ(12.475, particles[3].position.y);
+
+    ASSERT_FLOAT_EQ(-1., particles[2].velocity.x);
+    ASSERT_FLOAT_EQ(-1., particles[2].velocity.y);
+    ASSERT_FLOAT_EQ(2., particles[3].velocity.x);
+    ASSERT_FLOAT_EQ(2., particles[3].velocity.y);
+
+
 
 }
 
