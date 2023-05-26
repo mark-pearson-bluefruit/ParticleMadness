@@ -388,8 +388,8 @@ TEST(CollisionCalculation, CalculateContinuousCollisionBetweenTwoParticlesCorrec
     // Collision 2
     ASSERT_FLOAT_EQ((64.-7.*sqrt(2))/4., particles[2].position.x);
     ASSERT_FLOAT_EQ((48.-7.*sqrt(2))/4., particles[2].position.y);
-    ASSERT_FLOAT_EQ(16.475, particles[3].position.x);
-    ASSERT_FLOAT_EQ(12.475, particles[3].position.y);
+    ASSERT_FLOAT_EQ(16.47487373, particles[3].position.x);
+    ASSERT_FLOAT_EQ(12.47487373, particles[3].position.y);
 
     ASSERT_FLOAT_EQ(-1., particles[2].velocity.x);
     ASSERT_FLOAT_EQ(-1., particles[2].velocity.y);

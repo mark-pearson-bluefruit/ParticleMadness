@@ -8,4 +8,6 @@ float velocityAfterOneDimCollision(float mass1, float mass2, float velocityBefor
 Vector2 velocityAfterTwoDimCollision(float mass1, float mass2, Vector2 velocityBefore1, Vector2 velocityBefore2, Vector2 unitNormal);
 
 void positionVelocityCorrectionWithBoundingBox(particle* particle1, Rectangle boundingBox);
+void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* particle2);
+
 #endif // COLLISIONCALCULATION_H

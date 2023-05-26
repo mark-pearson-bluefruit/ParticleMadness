@@ -39,3 +39,26 @@ void positionVelocityCorrectionWithBoundingBox(particle* particle1, Rectangle bo
         particle1->velocity.y = -particle1->velocity.y;
     }
 }
+
+void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* particle2) {
+    const Vector2 positionDifference = Vector2Subtract(particle1->position, particle2->position);
+    const Vector2 velocityDifference = Vector2Subtract(particle1->velocity, particle2->velocity);
+    const Vector2 velocityDifferencePerp = {velocityDifference.y, -velocityDifference.x};
+    const float velocityDifferenceDistanceSquarred = Vector2DotProduct(velocityDifference, velocityDifference);
+    const float distanceSquared = (particle1->radius + particle2->radius)*(particle1->radius + particle2->radius);
+
+    float stepBackTime = Vector2DotProduct(positionDifference, velocityDifference);
+    stepBackTime += sqrt(distanceSquared*velocityDifferenceDistanceSquarred - Vector2DotProduct(positionDifference, velocityDifferencePerp));;
+    stepBackTime /= velocityDifferenceDistanceSquarred;
+
+    particle1->position = Vector2Subtract(particle1->position, Vector2Scale(particle1->velocity, stepBackTime));
+    particle2->position = Vector2Subtract(particle2->position, Vector2Scale(particle2->velocity, stepBackTime));
+    // Circles are now touching
+
+    Vector2 temp = particle1->velocity;
+    particle1->velocity = particle2->velocity;
+    particle2->velocity = temp;
+
+    particle1->position = Vector2Add(particle1->position, Vector2Scale(particle1->velocity, stepBackTime));
+    particle2->position = Vector2Add(particle2->position, Vector2Scale(particle2->velocity, stepBackTime));
+}
