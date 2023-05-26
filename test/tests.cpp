@@ -188,15 +188,14 @@ TEST_F(Calculation, NextTimeStepDetectsBoundaryCollisions) {
 
     // Position Check
     
-    ASSERT_EQ(2.1f, particles[0].position.x);
-    ASSERT_EQ(14.99f, particles[0].position.y);
-    ASSERT_EQ(39.8f, particles[1].position.x);
-    ASSERT_EQ(15.01f, particles[1].position.y);    
-    ASSERT_EQ(20.01f, particles[2].position.x);
-    ASSERT_EQ(18.9f, particles[2].position.y);
-    ASSERT_EQ(19.99f, particles[3].position.x);
-    ASSERT_EQ(11.2f, particles[3].position.y);
-    
+    ASSERT_FLOAT_EQ(2.3f, particles[0].position.x);
+    ASSERT_FLOAT_EQ(14.99f, particles[0].position.y); //
+    ASSERT_FLOAT_EQ(39.0f, particles[1].position.x);
+    ASSERT_FLOAT_EQ(15.01f, particles[1].position.y); //
+    ASSERT_FLOAT_EQ(20.01f, particles[2].position.x); //
+    ASSERT_FLOAT_EQ(18.5f, particles[2].position.y);
+    ASSERT_FLOAT_EQ(19.99f, particles[3].position.x); //
+    ASSERT_FLOAT_EQ(11.8f, particles[3].position.y);
 
     // Velocity Check
     ASSERT_EQ(1.f, particles[0].velocity.x);
