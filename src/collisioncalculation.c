@@ -55,9 +55,14 @@ void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* p
     particle2->position = Vector2Subtract(particle2->position, Vector2Scale(particle2->velocity, stepBackTime));
     // Circles are now touching
 
-    Vector2 temp = particle1->velocity;
-    particle1->velocity = particle2->velocity;
-    particle2->velocity = temp;
+    
+
+    Vector2 unitNormal = Vector2Subtract(particle1->position, particle2->position);
+    unitNormal = Vector2Scale(unitNormal, 1./Vector2Length(unitNormal));
+    Vector2 velocityAfter_1 = velocityAfterTwoDimCollision(particle1->mass, particle2->mass, particle1->velocity, particle2->velocity, unitNormal);
+    Vector2 velocityAfter_2 = velocityAfterTwoDimCollision(particle2->mass, particle1->mass, particle2->velocity, particle1->velocity, unitNormal);
+    particle1->velocity = velocityAfter_1;
+    particle2->velocity = velocityAfter_2;
 
     particle1->position = Vector2Add(particle1->position, Vector2Scale(particle1->velocity, stepBackTime));
     particle2->position = Vector2Add(particle2->position, Vector2Scale(particle2->velocity, stepBackTime));
