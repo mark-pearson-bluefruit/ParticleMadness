@@ -325,6 +325,41 @@ TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorr
 
 }
 
+TEST(CollisionCalculation, CalculateBasicCorrectionOfOverlapBetweenTwoParticlesCorrectly) {
+    // Given
+    const size_t number_of_particles = 2;
+    Rectangle box;
+    box.height =  20.;
+    box.width = 25.;
+    box.x = 0.;
+    box.y = 20.;
+
+    particle particles[number_of_particles];
+
+    particles[0].position.x = 4.;
+    particles[0].position.y = 4.;
+    particles[0].radius = 1.;
+    particles[0].mass = 3.;
+
+    particles[1].position.x = 5.;
+    particles[1].position.y = 4.;
+    particles[1].radius = 1.;
+    particles[1].mass = 1.;
+
+
+
+    // When
+    positionVelocityOverlapCorrectionWithTwoParticles(&particles[0], &particles[1]);
+
+    // Then
+
+    ASSERT_FLOAT_EQ(3.75, particles[0].position.x);
+    ASSERT_FLOAT_EQ(4., particles[0].position.y);
+    ASSERT_FLOAT_EQ(5.75, particles[1].position.x);
+    ASSERT_FLOAT_EQ(4., particles[1].position.y);
+
+}
+
 TEST(CollisionCalculation, CalculateContinuousCollisionBetweenTwoParticlesCorrectly) {
     // Given
     const size_t number_of_particles = 4;
