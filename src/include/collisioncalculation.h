@@ -9,5 +9,6 @@ Vector2 velocityAfterTwoDimCollision(float mass1, float mass2, Vector2 velocityB
 
 void positionVelocityCorrectionWithBoundingBox(particle* particle1, Rectangle boundingBox);
 void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* particle2);
+void positionVelocityOverlapCorrectionWithTwoParticles(particle* particle1, particle* particle2);
 
 #endif // COLLISIONCALCULATION_H

@@ -5,6 +5,7 @@
 void nextStep(particle* particles, size_t number_of_particles, float deltaTime, Rectangle box) {
 
     // Particle to Particle Collision Detection and Correction
+    
     for (size_t a = 0; a < number_of_particles; a++) {
         for (size_t b = a + 1; b < number_of_particles; b++) {
             if (doParticlesOverlap(particles[a], particles[b])) {
@@ -17,6 +18,7 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
             }
         }
     }
+    
 
     for (size_t i = 0; i < number_of_particles; i++)
     {
@@ -39,4 +41,15 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
         positionVelocityCorrectionWithBoundingBox(&particles[i], box);
 
     }
+
+    
+    for (size_t a = 0; a < number_of_particles; a++) {
+        for (size_t b = a + 1; b < number_of_particles; b++) {
+            if (doParticlesOverlap(particles[a], particles[b])) {
+                positionVelocityOverlapCorrectionWithTwoParticles(&particles[a], &particles[b]);
+            }
+        }
+    }
+    
+    
 }

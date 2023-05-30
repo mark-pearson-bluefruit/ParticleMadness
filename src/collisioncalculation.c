@@ -45,6 +45,7 @@ void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* p
     const Vector2 velocityDifference = Vector2Subtract(particle1->velocity, particle2->velocity);
     const Vector2 velocityDifferencePerp = {velocityDifference.y, -velocityDifference.x};
     const float velocityDifferenceDistanceSquarred = Vector2DotProduct(velocityDifference, velocityDifference);
+
     const float distanceSquared = (particle1->radius + particle2->radius)*(particle1->radius + particle2->radius);
 
     float stepBackTime = Vector2DotProduct(positionDifference, velocityDifference);
@@ -66,4 +67,13 @@ void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* p
 
     particle1->position = Vector2Add(particle1->position, Vector2Scale(particle1->velocity, stepBackTime));
     particle2->position = Vector2Add(particle2->position, Vector2Scale(particle2->velocity, stepBackTime));
+}
+
+void positionVelocityOverlapCorrectionWithTwoParticles(particle* particle1, particle* particle2) {
+    const Vector2 direction1To2 = Vector2Subtract(particle2->position, particle1->position);
+    const float distance = Vector2Length(direction1To2);
+    const float weightedCorrectionDistance = (particle1->radius + particle2->radius - distance)/((particle1->mass + particle2->mass)*distance);
+
+    particle1->position = Vector2Subtract(particle1->position, Vector2Scale(direction1To2, weightedCorrectionDistance*particle2->mass));
+    particle2->position = Vector2Add(particle2->position, Vector2Scale(direction1To2, weightedCorrectionDistance*particle1->mass));
 }
