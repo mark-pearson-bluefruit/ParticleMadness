@@ -452,7 +452,7 @@ int main(void)
     size_t numberOfParticles;
     particle particles[MAX_NUMBER_OF_PARTICLES];
 
-    exampleSnooker(&window, &resolution, &numberOfParticles, particles);
+    exampleLotsOfBalls(&window, &resolution, &numberOfParticles, particles);
 
 
     //--------------------------------------------------------------------------------------
@@ -464,6 +464,13 @@ int main(void)
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
         nextStep(particles, numberOfParticles, deltaTime, window);
+        float kineticEnergy = calculateKineticEnergy(particles, numberOfParticles);
+        char kineticEnergyText[35];
+        sprintf(kineticEnergyText, "KE = %.2f", kineticEnergy);
+
+        float framesPerSecond = GetFPS();
+        char FPSText[15];
+        sprintf(FPSText, "FPS = %.2f", framesPerSecond);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -472,6 +479,8 @@ int main(void)
         ClearBackground(BLACK);
 
         displayParticle(particles, numberOfParticles, window, resolution);
+        DrawText(kineticEnergyText, 5, 5, 20, GREEN);
+        DrawText(FPSText, 5, 30, 20, GREEN);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
