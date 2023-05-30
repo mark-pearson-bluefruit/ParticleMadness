@@ -3,9 +3,9 @@
 #include "render.h"
 
 enum {
-    MAX_NUMBER_OF_PARTICLES = 2000,
-    screenWidth = 800,
-    screenHeight = 400,
+    MAX_NUMBER_OF_PARTICLES = 4500,
+    screenWidth = 1600,
+    screenHeight = 800,
 };
 
 // Examples
@@ -60,6 +60,38 @@ void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
     particles[0].color = WHITE;
     particles[0].velocity.y = -3.;
     particles[0].velocity.x = 3.;
+}
+
+// Examples
+void exampleLotsOfBalls(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
+    *numberOfParticles = 4000;
+    window->x = 0.;
+    window->y = 100.;
+    window->height = 100;
+    window->width = 200;
+
+    resolution->x = screenWidth;
+    resolution->y = screenHeight;
+
+
+    for (size_t i = 0; i < *numberOfParticles; i++) {
+        particles[i].position.x = (float)((2*i+1)%100);
+        particles[i].position.y = (float) (2 + (2*i+1)/100);
+        particles[i].velocity.x = 6.;
+        particles[i].velocity.y = 14.;
+        particles[i].radius = 0.4;
+        particles[i].color = MAROON;
+        particles[i].mass = 1.;
+    }
+    particles[0].position.x = 120.;
+    particles[0].position.y = 60.;
+    particles[0].color = WHITE;
+    particles[0].radius = 10.;
+    particles[0].velocity.y = 0.;
+    particles[0].velocity.x = -45.;
+    particles[0].mass = 10000.;
+
+    particles[1].color = BLUE;
 }
 
 void example3(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
@@ -172,6 +204,33 @@ void example5(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
 
 }
 
+void example6(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
+    *numberOfParticles = 2;
+    window->x = 0.;
+    window->y = 10.;
+    window->height = 10;
+    window->width = 20;
+
+    resolution->x = screenWidth;
+    resolution->y = screenHeight;
+
+    particles[0].position.x = 1.5;
+    particles[0].position.y = 5.;
+    particles[0].velocity.x = 0.; 
+    particles[0].velocity.y = 0.0;
+    particles[0].radius = 1.;
+    particles[0].color = MAROON;
+    particles[0].mass = 1.;
+
+    particles[1].position.x = 2.5;
+    particles[1].position.y = 5.;
+    particles[1].velocity.x = 0.; 
+    particles[1].velocity.y = 0.;
+    particles[1].radius = 1.;
+    particles[1].color = WHITE;
+    particles[1].mass = 1.;
+}
+
 void exampleSnooker(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
     *numberOfParticles = 16;
     window->x = 0.;
@@ -180,8 +239,8 @@ void exampleSnooker(Rectangle* window, Vector2* resolution, size_t* numberOfPart
     window->width = 100;
 
     const float ballRadius = 1.;
-    const float yStep = ballRadius;
-    const float xStep = sqrt(3)*ballRadius;
+    const float yStep = ballRadius + 0.1;
+    const float xStep = sqrt(3)*(ballRadius + 0.1);
 
     resolution->x = screenWidth;
     resolution->y = screenHeight;
@@ -383,20 +442,17 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 400;
-
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    const float deltaTime = 1/240.;
+    const float deltaTime = 1/60.;
 
     Rectangle window;
     Vector2 resolution;
     size_t numberOfParticles;
     particle particles[MAX_NUMBER_OF_PARTICLES];
 
-    example2(&window, &resolution, &numberOfParticles, particles);
+    exampleSnooker(&window, &resolution, &numberOfParticles, particles);
 
 
     //--------------------------------------------------------------------------------------
@@ -408,9 +464,7 @@ int main(void)
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
         nextStep(particles, numberOfParticles, deltaTime, window);
-        nextStep(particles, numberOfParticles, deltaTime, window);
-        nextStep(particles, numberOfParticles, deltaTime, window);
-        nextStep(particles, numberOfParticles, deltaTime, window);
+
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
