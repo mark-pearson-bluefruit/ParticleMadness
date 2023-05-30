@@ -3,6 +3,7 @@
 
 #include "raylib.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef struct particle
 {
@@ -14,5 +15,6 @@ typedef struct particle
 } particle;
 
 bool doParticlesOverlap(particle particle1, particle particle2);
+float calculateKineticEnergy(particle* particles, size_t number_of_particles);
 
 #endif // PARTICLE_H

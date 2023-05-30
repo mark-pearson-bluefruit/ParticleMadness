@@ -252,6 +252,37 @@ TEST_F(Calculation, NextTimeStepDetectsParticleCollisions) {
     ASSERT_FLOAT_EQ(4. + expectedVelocity[1].y*deltaTime, particles[1].position.y);    
 }
 
+TEST_F(Calculation, CalculateKineticEnergyOfSystemCorrectly) {
+    // Given
+    const size_t number_of_particles = 2;
+    const float deltaTime = 0.1;
+    Rectangle box;
+    box.height =  10.;
+    box.width = 10.;
+    box.x = 0.;
+    box.y = 10.;
+
+    particle particles[number_of_particles];
+    particles[0].position = {4., 6.};
+    particles[1].position = {8., 4.};
+
+    particles[0].radius = 2.0;
+    particles[1].radius = 1.0;
+
+    particles[0].velocity = {5.5, 1.0};
+    particles[1].velocity = {-0.5, -1.0};
+
+    particles[0].mass = 4.0;
+    particles[1].mass = 8.0;
+
+    // When
+    float kineticEnergy = calculateKineticEnergy(particles, number_of_particles);
+
+    // Then
+    ASSERT_FLOAT_EQ(67.5, kineticEnergy); 
+  
+}
+
 TEST(CollisionCalculation, CalculateContinuousCollisionBetweenParticleAndBoxCorrectly) {
     // Given
     const size_t number_of_particles = 4;
