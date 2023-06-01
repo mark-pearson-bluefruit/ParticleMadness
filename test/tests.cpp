@@ -549,6 +549,40 @@ TEST(CollisionCalculation, DetectACollisionBetweenTwoCircles) {
     ASSERT_FALSE(doParticlesOverlap(particle2, particle3));
 }
 
+TEST(HashMap, CreatesTheCorrectDataStructureForHashMap) {
+    // Given
+    const size_t number_of_particles = 3;
+    Rectangle box;
+    box.height =  20.;
+    box.width = 25.;
+    box.x = 0.;
+    box.y = 20.;
+
+    section sections[130];
+    const float sectionWidth = 2.;
+
+
+    particle particles[number_of_particles];
+    particles[0].position = {10., 2.};
+    particles[0].radius = 2;
+    particles[1].position = {0.5, 1.5};
+    particles[1].radius = 1;
+    particles[2].position = {5, 6};
+    particles[2].radius = 1;
+
+    // When
+    create2DHashMap(sections, sectionWidth, particles, box, number_of_particles);
+
+    // Then
+    for (size_t i = 0; i < 130; i++) {
+        if (i == 18 || i == 0 || i == 41) {
+            ASSERT_EQ(1, sections[i].numberOfParticles);
+        } else {
+            ASSERT_EQ(0, sections[i].numberOfParticles);
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

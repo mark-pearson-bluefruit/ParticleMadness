@@ -6,6 +6,11 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
 
     // Particle to Particle Collision Detection and Correction
     
+    // Create hash map
+
+    // For each particle
+    // Check the hash map for ajacent particles to compare to 
+
     for (size_t a = 0; a < number_of_particles; a++) {
         for (size_t b = a + 1; b < number_of_particles; b++) {
             if (doParticlesOverlap(particles[a], particles[b])) {

@@ -64,7 +64,7 @@ void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
 
 // Examples
 void exampleLotsOfBalls(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
-    *numberOfParticles = 4000;
+    *numberOfParticles = 4500;
     window->x = 0.;
     window->y = 100.;
     window->height = 100;
@@ -88,8 +88,8 @@ void exampleLotsOfBalls(Rectangle* window, Vector2* resolution, size_t* numberOf
     particles[0].color = WHITE;
     particles[0].radius = 10.;
     particles[0].velocity.y = 0.;
-    particles[0].velocity.x = -45.;
-    particles[0].mass = 10000.;
+    particles[0].velocity.x = -100.;
+    particles[0].mass = 1000.;
 
     particles[1].color = BLUE;
 }
