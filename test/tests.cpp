@@ -583,6 +583,43 @@ TEST(HashMap, CreatesTheCorrectDataStructureForHashMap) {
     }
 }
 
+TEST(HashMap, RetrievesTheCorrectSectionsToCheck) {
+    // Given
+    Rectangle box;
+    box.height =  20.;
+    box.width = 25.;
+    box.x = 0.;
+    box.y = 20.;
+
+    const float sectionWidth = 5.;
+
+    // Given 1
+    size_t currentSectionIndex = 0; 
+
+    // When 1
+    sectionIndexList sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 1
+    ASSERT_EQ(3, sectionIndexes.numberOfSections);
+    ASSERT_EQ(1, sectionIndexes.sectionIndex[0]);
+    ASSERT_EQ(5, sectionIndexes.sectionIndex[1]);
+    ASSERT_EQ(6, sectionIndexes.sectionIndex[2]);
+
+
+    // Given 2
+    currentSectionIndex = 1; 
+
+    // When 2
+    sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 2
+    ASSERT_EQ(4, sectionIndexes.numberOfSections);
+    ASSERT_EQ(2, sectionIndexes.sectionIndex[0]);
+    ASSERT_EQ(5, sectionIndexes.sectionIndex[1]);
+    ASSERT_EQ(7, sectionIndexes.sectionIndex[2]);
+    ASSERT_EQ(8, sectionIndexes.sectionIndex[2]);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
