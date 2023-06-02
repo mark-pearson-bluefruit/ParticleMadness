@@ -17,9 +17,9 @@ float calculateKineticEnergy(particle* particles, size_t number_of_particles) {
     return totalEnergy;
 }
 
-void create2DHashMap(section* sections, float sectionWidth, particle* particles, Rectangle box, size_t number_of_particles) {
+void create2DHashMap(section* sections, size_t numberOfSections, float sectionWidth, particle* particles, Rectangle box, size_t number_of_particles) {
     // Reset sections
-    for (size_t i = 0; i < 130; i++) {
+    for (size_t i = 0; i < numberOfSections; i++) {
         sections[i].numberOfParticles = 0;
     }
 
