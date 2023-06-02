@@ -2,15 +2,8 @@
 #include "raymath.h"
 #include "collisioncalculation.h"
 
-void nextStep(particle* particles, size_t number_of_particles, float deltaTime, Rectangle box) {
-
-    // Particle to Particle Collision Detection and Correction
-    
-    // Create hash map
-
-    // For each particle
-    // Check the hash map for ajacent particles to compare to 
-
+// PRIVATE
+void collisionDetectionBadMethod(particle* particles, size_t number_of_particles) {
     for (size_t a = 0; a < number_of_particles; a++) {
         for (size_t b = a + 1; b < number_of_particles; b++) {
             if (doParticlesOverlap(particles[a], particles[b])) {
@@ -22,8 +15,21 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
                 particles[b].velocity = velocityAfter_b;
             }
         }
-    }
+    }    
+}
+
+
+void nextStep(particle* particles, size_t number_of_particles, float deltaTime, Rectangle box) {
+
+    // Particle to Particle Collision Detection and Correction
     
+    // Create hash map
+
+    // For each particle
+    // Check the hash map for ajacent particles to compare to 
+
+    
+    collisionDetectionBadMethod(particles, number_of_particles);
 
     for (size_t i = 0; i < number_of_particles; i++)
     {
