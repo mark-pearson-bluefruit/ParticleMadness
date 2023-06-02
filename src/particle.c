@@ -23,7 +23,6 @@ void create2DHashMap(section* sections, float sectionWidth, particle* particles,
         sections[i].numberOfParticles = 0;
     }
 
-
     size_t sectionsInXDirection = ceil(box.width/sectionWidth);
     size_t sectionsInYDirection = ceil(box.height/sectionWidth);
 
@@ -37,10 +36,45 @@ void create2DHashMap(section* sections, float sectionWidth, particle* particles,
 }
 
 sectionIndexList getSectionsToCheck(size_t currentSectionIndex, float sectionWidth, Rectangle box) {
+    size_t sectionsInXDirection = ceil(box.width/sectionWidth);
+    size_t sectionsInYDirection = ceil(box.height/sectionWidth);
     sectionIndexList sectionIndexes;
-    sectionIndexes.numberOfSections = 3;
-    sectionIndexes.sectionIndex[0] = 1;
-    sectionIndexes.sectionIndex[1] = 5;
-    sectionIndexes.sectionIndex[2] = 6;
+
+    if (currentSectionIndex == sectionsInXDirection*sectionsInYDirection - 1) {
+        // In BR
+        sectionIndexes.numberOfSections = 0;
+        return sectionIndexes;
+    }
+
+    if (currentSectionIndex >= sectionsInXDirection*(sectionsInYDirection-1)) {
+        // In B
+        sectionIndexes.numberOfSections = 1;
+        sectionIndexes.sectionIndex[0] = currentSectionIndex + 1; // R
+        return sectionIndexes;
+    }
+
+    if (currentSectionIndex%sectionsInXDirection == 0) {
+        // In L
+        sectionIndexes.numberOfSections = 3;
+        sectionIndexes.sectionIndex[0] = currentSectionIndex+1; // R
+        sectionIndexes.sectionIndex[1] = currentSectionIndex+sectionsInXDirection; // D
+        sectionIndexes.sectionIndex[2] = currentSectionIndex+sectionsInXDirection+1; // DR
+        return sectionIndexes;
+    }
+
+    if ((currentSectionIndex+1)%sectionsInXDirection == 0) {
+        // In R
+        sectionIndexes.numberOfSections = 2;
+        sectionIndexes.sectionIndex[0] = currentSectionIndex+sectionsInXDirection-1; // DL
+        sectionIndexes.sectionIndex[1] = currentSectionIndex+sectionsInXDirection; // D
+        return sectionIndexes;
+    }
+
+    // In center section
+    sectionIndexes.numberOfSections = 4;
+    sectionIndexes.sectionIndex[0] = currentSectionIndex+1; // R
+    sectionIndexes.sectionIndex[1] = currentSectionIndex+sectionsInXDirection-1; // DL
+    sectionIndexes.sectionIndex[2] = currentSectionIndex+sectionsInXDirection; // D
+    sectionIndexes.sectionIndex[3] = currentSectionIndex+sectionsInXDirection+1; // DR
     return sectionIndexes;
 }

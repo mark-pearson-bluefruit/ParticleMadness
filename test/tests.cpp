@@ -616,8 +616,51 @@ TEST(HashMap, RetrievesTheCorrectSectionsToCheck) {
     ASSERT_EQ(4, sectionIndexes.numberOfSections);
     ASSERT_EQ(2, sectionIndexes.sectionIndex[0]);
     ASSERT_EQ(5, sectionIndexes.sectionIndex[1]);
-    ASSERT_EQ(7, sectionIndexes.sectionIndex[2]);
-    ASSERT_EQ(8, sectionIndexes.sectionIndex[2]);
+    ASSERT_EQ(6, sectionIndexes.sectionIndex[2]);
+    ASSERT_EQ(7, sectionIndexes.sectionIndex[3]);
+
+    // Given 3
+    currentSectionIndex = 8; 
+
+    // When 3
+    sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 3
+    ASSERT_EQ(4, sectionIndexes.numberOfSections);
+    ASSERT_EQ(9, sectionIndexes.sectionIndex[0]);
+    ASSERT_EQ(12, sectionIndexes.sectionIndex[1]);
+    ASSERT_EQ(13, sectionIndexes.sectionIndex[2]);
+    ASSERT_EQ(14, sectionIndexes.sectionIndex[3]);
+
+    // Given 4
+    currentSectionIndex = 14; 
+
+    // When 4
+    sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 4
+    ASSERT_EQ(2, sectionIndexes.numberOfSections);
+    ASSERT_EQ(18, sectionIndexes.sectionIndex[0]);
+    ASSERT_EQ(19, sectionIndexes.sectionIndex[1]);
+
+    // Given 5
+    currentSectionIndex = 18; 
+
+    // When 5
+    sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 5
+    ASSERT_EQ(1, sectionIndexes.numberOfSections);
+    ASSERT_EQ(19, sectionIndexes.sectionIndex[0]);
+    
+    // Given 6
+    currentSectionIndex = 19; 
+
+    // When 6
+    sectionIndexes = getSectionsToCheck(currentSectionIndex, sectionWidth, box);
+
+    // Then 6
+    ASSERT_EQ(0, sectionIndexes.numberOfSections);
 }
 
 int main(int argc, char** argv) {
