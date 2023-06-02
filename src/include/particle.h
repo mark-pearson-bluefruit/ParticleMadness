@@ -21,6 +21,7 @@ float calculateKineticEnergy(particle* particles, size_t number_of_particles);
 enum {
     MAX_NUMBER_OF_PARTICLES_IN_SECTION = 200,
     MAX_NUMBER_OF_SECTIONS_TO_CHECK = 4,
+    MAX_NUMBER_OF_SECTIONS = 250,
 };
 
 typedef struct section
@@ -35,7 +36,7 @@ typedef struct sectionIndexList
     size_t sectionIndex[MAX_NUMBER_OF_SECTIONS_TO_CHECK];
 } sectionIndexList;
 
-void create2DHashMap(section* sections, size_t numberOfSections, float sectionWidth, particle* particles, Rectangle box, size_t number_of_particles);
+void create2DHashMap(section* sections, float sectionWidth, particle* particles, Rectangle box, size_t number_of_particles);
 sectionIndexList getSectionsToCheck(size_t currentSectionIndex, float sectionWidth, Rectangle box);
 
 

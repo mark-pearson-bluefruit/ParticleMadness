@@ -552,14 +552,13 @@ TEST(CollisionCalculation, DetectACollisionBetweenTwoCircles) {
 TEST(HashMap, CreatesTheCorrectDataStructureForHashMap) {
     // Given
     const size_t number_of_particles = 3;
-    const size_t numberOfSections = 130;
     Rectangle box;
     box.height =  20.;
     box.width = 25.;
     box.x = 0.;
     box.y = 20.;
 
-    section sections[numberOfSections];
+    section sections[MAX_NUMBER_OF_SECTIONS];
     const float sectionWidth = 2.;
 
 
@@ -572,10 +571,10 @@ TEST(HashMap, CreatesTheCorrectDataStructureForHashMap) {
     particles[2].radius = 1;
 
     // When
-    create2DHashMap(sections, numberOfSections, sectionWidth, particles, box, number_of_particles);
+    create2DHashMap(sections, sectionWidth, particles, box, number_of_particles);
 
     // Then
-    for (size_t i = 0; i < numberOfSections; i++) {
+    for (size_t i = 0; i < MAX_NUMBER_OF_SECTIONS; i++) {
         if (i == 18 || i == 0 || i == 41) {
             ASSERT_EQ(1, sections[i].numberOfParticles);
         } else {
