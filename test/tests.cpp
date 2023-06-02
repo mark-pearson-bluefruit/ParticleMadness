@@ -575,7 +575,7 @@ TEST(HashMap, CreatesTheCorrectDataStructureForHashMap) {
 
     // Then
     for (size_t i = 0; i < MAX_NUMBER_OF_SECTIONS; i++) {
-        if (i == 18 || i == 0 || i == 41) {
+        if (i == 122 || i == 117 || i == 93) {
             ASSERT_EQ(1, sections[i].numberOfParticles);
         } else {
             ASSERT_EQ(0, sections[i].numberOfParticles);

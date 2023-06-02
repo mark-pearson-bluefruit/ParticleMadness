@@ -29,7 +29,7 @@ void create2DHashMap(section* sections, float sectionWidth, particle* particles,
 
     for (size_t i = 0; i < number_of_particles; i++) {
         size_t xSectionPosition = (particles[i].position.x - box.x)/sectionWidth;
-        size_t ySectionPosition = (particles[i].position.y - (box.y - box.height))/sectionWidth;
+        size_t ySectionPosition = (box.y - particles[i].position.y)/sectionWidth;
         size_t sectionIndex = xSectionPosition + ySectionPosition*sectionsInXDirection;
         sections[sectionIndex].particles[sections[sectionIndex].numberOfParticles] = &particles[i];
         sections[sectionIndex].numberOfParticles++;
