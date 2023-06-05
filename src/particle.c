@@ -1,6 +1,7 @@
 #include "particle.h"
 #include "raymath.h"
 #include <math.h>
+#include <stdio.h>
 
 bool doParticlesOverlap(particle particle1, particle particle2) {
     Vector2 direction = Vector2Subtract(particle1.position,  particle2.position);
@@ -21,7 +22,9 @@ void create2DHashMap(section* sections, float sectionWidth, particle* particles,
     // Reset sections
     size_t sectionsInXDirection = ceil(box.width/sectionWidth);
     size_t sectionsInYDirection = ceil(box.height/sectionWidth);
-    // need to have sectionsInXDirection*sectionsInYDirection <= MAX_NUMBER_OF_SECTIONS
+    if (sectionsInXDirection*sectionsInYDirection > MAX_NUMBER_OF_SECTIONS) {
+        perror("Error message sectionsInXDirection*sectionsInYDirection > MAX_NUMBER_OF_SECTIONS");
+    }
 
     for (size_t i = 0; i < MAX_NUMBER_OF_SECTIONS; i++) {
         sections[i].numberOfParticles = 0;

@@ -19,9 +19,9 @@ float calculateKineticEnergy(particle* particles, size_t number_of_particles);
 
 // N-body solutions part
 enum {
-    MAX_NUMBER_OF_PARTICLES_IN_SECTION = 200,
+    MAX_NUMBER_OF_PARTICLES_IN_SECTION = 4000,
     MAX_NUMBER_OF_SECTIONS_TO_CHECK = 4,
-    MAX_NUMBER_OF_SECTIONS = 250,
+    MAX_NUMBER_OF_SECTIONS = 25000,
 };
 
 typedef struct section

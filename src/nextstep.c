@@ -2,22 +2,113 @@
 #include "raymath.h"
 #include "collisioncalculation.h"
 
+static section sections[MAX_NUMBER_OF_SECTIONS];
+
+void collisionResponse(particle* particle1, particle* particle2) {
+    if (doParticlesOverlap(*particle1, *particle2)) {
+        Vector2 unitNormal = Vector2Subtract(particle2->position, particle1->position);
+        unitNormal = Vector2Scale(unitNormal, 1./Vector2Length(unitNormal));
+        Vector2 velocityAfter_a = velocityAfterTwoDimCollision(particle1->mass, particle2->mass, particle1->velocity, particle2->velocity, unitNormal);
+        Vector2 velocityAfter_b = velocityAfterTwoDimCollision(particle2->mass, particle1->mass, particle2->velocity, particle1->velocity, unitNormal);
+        particle1->velocity = velocityAfter_a;
+        particle2->velocity = velocityAfter_b;
+    }    
+}
+
 // PRIVATE
-void collisionDetectionBadMethod(particle* particles, size_t number_of_particles) {
+void collisionDetectionBadMethod(particle* particles, size_t number_of_particles, Rectangle box) {
+    for (size_t a = 0; a < number_of_particles; a++) {
+        for (size_t b = a + 1; b < number_of_particles; b++) {
+            collisionResponse(&particles[a], &particles[b]);
+        }
+    }    
+}
+
+// PRIVATE
+void collisionDetectionHashMap(particle* particles, size_t number_of_particles, Rectangle box) {
+    // Create hash map 
+    
+    const float sectionWidth = 3.;
+    // Section width is set to biggest radius
+    
+    create2DHashMap(sections, sectionWidth, particles, box, number_of_particles);
+    
+    size_t sectionsInXDirection = ceil(box.width/sectionWidth);
+    size_t sectionsInYDirection = ceil(box.height/sectionWidth);
+
+    size_t numberOfSections = sectionsInXDirection*sectionsInYDirection;
+
+    for (size_t sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
+        
+        sectionIndexList neighbourSections = getSectionsToCheck(sectionIndex, sectionWidth, box);
+        for (size_t particleIndex = 0; particleIndex < sections[sectionIndex].numberOfParticles; particleIndex++) {
+
+            // Compare with particles in neighbouring sections
+            for (size_t compareSectionLoop = 0; compareSectionLoop < neighbourSections.numberOfSections; compareSectionLoop++) {
+                for (size_t particleCompareIndex = 0; particleCompareIndex < sections[neighbourSections.sectionIndex[compareSectionLoop]].numberOfParticles; particleCompareIndex++) {
+                    collisionResponse(sections[sectionIndex].particles[particleIndex], sections[neighbourSections.sectionIndex[compareSectionLoop]].particles[particleCompareIndex]);
+                }
+            }
+
+            // Compare with other particles in this section
+            for (size_t particleIndexB = particleIndex + 1; particleIndexB < sections[sectionIndex].numberOfParticles; particleIndexB++) {
+                collisionResponse(sections[sectionIndex].particles[particleIndex], sections[sectionIndex].particles[particleIndexB]);
+            }
+        }
+    }
+
+    // does not take into account particles in current box
+    
+    // For all sections
+        // Get particles in section
+        // Get particles in next door section
+        // For each particle in this section
+            // For each particle in the next door section
+
+}
+
+void positionVelocityOverlapCorrectionBadMethod(particle* particles, size_t number_of_particles, Rectangle box) {
     for (size_t a = 0; a < number_of_particles; a++) {
         for (size_t b = a + 1; b < number_of_particles; b++) {
             if (doParticlesOverlap(particles[a], particles[b])) {
-                Vector2 unitNormal = Vector2Subtract(particles[b].position, particles[a].position);
-                unitNormal = Vector2Scale(unitNormal, 1./Vector2Length(unitNormal));
-                Vector2 velocityAfter_a = velocityAfterTwoDimCollision(particles[a].mass, particles[b].mass, particles[a].velocity, particles[b].velocity, unitNormal);
-                Vector2 velocityAfter_b = velocityAfterTwoDimCollision(particles[b].mass, particles[a].mass, particles[b].velocity, particles[a].velocity, unitNormal);
-                particles[a].velocity = velocityAfter_a;
-                particles[b].velocity = velocityAfter_b;
+                positionVelocityOverlapCorrectionWithTwoParticles(&particles[a], &particles[b]);
             }
         }
     }    
 }
 
+void positionVelocityOverlapCorrectionHashMethod(particle* particles, size_t number_of_particles, Rectangle box) {
+    // Create hash map 
+    
+    const float sectionWidth = 3.;
+    // Section width is set to biggest radius
+    
+    create2DHashMap(sections, sectionWidth, particles, box, number_of_particles);
+    
+    size_t sectionsInXDirection = ceil(box.width/sectionWidth);
+    size_t sectionsInYDirection = ceil(box.height/sectionWidth);
+
+    size_t numberOfSections = sectionsInXDirection*sectionsInYDirection;
+
+    for (size_t sectionIndex = 0; sectionIndex < numberOfSections; sectionIndex++) {
+        
+        sectionIndexList neighbourSections = getSectionsToCheck(sectionIndex, sectionWidth, box);
+        for (size_t particleIndex = 0; particleIndex < sections[sectionIndex].numberOfParticles; particleIndex++) {
+
+            // Compare with particles in neighbouring sections
+            for (size_t compareSectionLoop = 0; compareSectionLoop < neighbourSections.numberOfSections; compareSectionLoop++) {
+                for (size_t particleCompareIndex = 0; particleCompareIndex < sections[neighbourSections.sectionIndex[compareSectionLoop]].numberOfParticles; particleCompareIndex++) {
+                    positionVelocityOverlapCorrectionWithTwoParticles(sections[sectionIndex].particles[particleIndex], sections[neighbourSections.sectionIndex[compareSectionLoop]].particles[particleCompareIndex]);
+                }
+            }
+
+            // Compare with other particles in this section
+            for (size_t particleIndexB = particleIndex + 1; particleIndexB < sections[sectionIndex].numberOfParticles; particleIndexB++) {
+                positionVelocityOverlapCorrectionWithTwoParticles(sections[sectionIndex].particles[particleIndex], sections[sectionIndex].particles[particleIndexB]);
+            }
+        }
+    }
+}
 
 void nextStep(particle* particles, size_t number_of_particles, float deltaTime, Rectangle box) {
 
@@ -29,7 +120,7 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
     // Check the hash map for ajacent particles to compare to 
 
     
-    collisionDetectionBadMethod(particles, number_of_particles);
+    collisionDetectionHashMap(particles, number_of_particles, box);
 
     for (size_t i = 0; i < number_of_particles; i++)
     {
@@ -53,7 +144,8 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
 
     }
 
-    
+    positionVelocityOverlapCorrectionHashMethod(particles, number_of_particles, box);
+    /*
     for (size_t a = 0; a < number_of_particles; a++) {
         for (size_t b = a + 1; b < number_of_particles; b++) {
             if (doParticlesOverlap(particles[a], particles[b])) {
@@ -61,6 +153,7 @@ void nextStep(particle* particles, size_t number_of_particles, float deltaTime, 
             }
         }
     }
+    */
     
     
 }

@@ -70,6 +70,9 @@ void positionVelocityCorrectionWithTwoParticles(particle* particle1, particle* p
 }
 
 void positionVelocityOverlapCorrectionWithTwoParticles(particle* particle1, particle* particle2) {
+    if (doParticlesOverlap(*particle1, *particle2) == false) {
+        return;
+    }
     const Vector2 direction1To2 = Vector2Subtract(particle2->position, particle1->position);
     const float distance = Vector2Length(direction1To2);
     const float weightedCorrectionDistance = (particle1->radius + particle2->radius - distance)/((particle1->mass + particle2->mass)*distance);

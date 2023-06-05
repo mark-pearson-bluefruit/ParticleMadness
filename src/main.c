@@ -3,7 +3,7 @@
 #include "render.h"
 
 enum {
-    MAX_NUMBER_OF_PARTICLES = 4500,
+    MAX_NUMBER_OF_PARTICLES = 9500,
     screenWidth = 1600,
     screenHeight = 800,
 };
@@ -38,21 +38,21 @@ void example1(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
 
 // Examples
 void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
-    *numberOfParticles = 2000;
+    *numberOfParticles = 8500;
     window->x = 0.;
-    window->y = 50.;
-    window->height = 50;
-    window->width = 100;
+    window->y = 100.;
+    window->height = 100;
+    window->width = 200;
 
     resolution->x = screenWidth;
     resolution->y = screenHeight;
 
 
     for (size_t i = 0; i < *numberOfParticles; i++) {
-        particles[i].position.x = (float)((2*i+1)%100);
-        particles[i].position.y = (float) (2 + (2*i+1)/100);
+        particles[i].position.x = (float)((2*i+1)%180);
+        particles[i].position.y = (float) (2 + (2*i+1)/180);
         particles[i].velocity.x = 3.;
-        particles[i].velocity.y = 35.;
+        particles[i].velocity.y = 13.;
         particles[i].radius = 0.4;
         particles[i].color = MAROON;
         particles[i].mass = 1.;
@@ -64,7 +64,7 @@ void example2(Rectangle* window, Vector2* resolution, size_t* numberOfParticles,
 
 // Examples
 void exampleLotsOfBalls(Rectangle* window, Vector2* resolution, size_t* numberOfParticles, particle* particles) {
-    *numberOfParticles = 4500;
+    *numberOfParticles = 9500;
     window->x = 0.;
     window->y = 100.;
     window->height = 100;
@@ -75,18 +75,18 @@ void exampleLotsOfBalls(Rectangle* window, Vector2* resolution, size_t* numberOf
 
 
     for (size_t i = 0; i < *numberOfParticles; i++) {
-        particles[i].position.x = (float)((2*i+1)%100);
-        particles[i].position.y = (float) (2 + (2*i+1)/100);
-        particles[i].velocity.x = 6.;
-        particles[i].velocity.y = 14.;
+        particles[i].position.x = (float)((2*i+1)%180);
+        particles[i].position.y = (float) (2 + (2*i+1)/180);
+        particles[i].velocity.x = 1.;
+        particles[i].velocity.y = 2.;
         particles[i].radius = 0.4;
         particles[i].color = MAROON;
         particles[i].mass = 1.;
     }
-    particles[0].position.x = 120.;
+    particles[0].position.x = 192.;
     particles[0].position.y = 60.;
     particles[0].color = WHITE;
-    particles[0].radius = 10.;
+    particles[0].radius = 5.;
     particles[0].velocity.y = 0.;
     particles[0].velocity.x = -100.;
     particles[0].mass = 1000.;
@@ -450,9 +450,9 @@ int main(void)
     Rectangle window;
     Vector2 resolution;
     size_t numberOfParticles;
-    particle particles[MAX_NUMBER_OF_PARTICLES];
+    static particle particles[MAX_NUMBER_OF_PARTICLES];
 
-    exampleLotsOfBalls(&window, &resolution, &numberOfParticles, particles);
+    example2(&window, &resolution, &numberOfParticles, particles);
 
 
     //--------------------------------------------------------------------------------------
